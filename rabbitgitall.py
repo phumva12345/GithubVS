@@ -8,7 +8,7 @@ def main():
     s1.show()
     s2 = Simple_drawing_window2()
     s2.show()
-    s3 = Simple_drawing_window2()
+    s3 = Simple_drawing_window3()
     s3.show()
     sys.exit(app.exec_())
 
