@@ -8,7 +8,10 @@ class Simple_drawing_window2(Simple_drawing_window):
         p.begin(self)
         p.setPen(QColor(25,127,0))
         p.setBrush(QColor(25,127,0))
-        p.drawPie(50,150,100,100,0,180*10)
+
+        p.drawPolygon([
+            QPoint(50,200),QPoint(150,200), QPoint(100,300),
+            ])
 
         p.drawImage(QRect(200,100,320,320), self.rabbit)
         p.end()
