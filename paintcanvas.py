@@ -15,9 +15,8 @@ class W(QWidget):
         self.penColor = 1
         self.button = QPushButton('Clear', self)
         self.button.clicked.connect(self.clear)
-
     def clear(self):
-        self.p.eraseRect(0, 0, 400, 400)
+        self.r = dict()
         self.update()
     def mousePressEvent(self, event):
         self.myIsMousePressing = True
@@ -55,9 +54,6 @@ class MyWidget(QMainWindow):
     def initMenu(self):
         self.button = QPushButton('Clear', self)
         self.button.clicked.connect(self.clear)
-
-    def clear(self):
-        print('waht')
 
 app = QApplication([])
 mainWin = MyWidget()
