@@ -1,4 +1,4 @@
-from PySide.QtGui import *
+from PySide.QtGui import QApplication, QMainWindow, QAction, QActionGroup, QWidget, QCursor, QPainter
 from PySide.QtCore import QTimer
 import PySide.QtCore as QtCore
 
@@ -13,11 +13,6 @@ class W(QWidget):
         self.y = 0
         self.r = dict()#{(x,Y,49, 49):rect}
         self.penColor = 1
-        self.button = QPushButton('Clear', self)
-        self.button.clicked.connect(self.clear)
-    def clear(self):
-        self.r = dict()
-        self.update()
     def mousePressEvent(self, event):
         self.myIsMousePressing = True
     def mouseReleaseEvent(self, event):
@@ -45,6 +40,7 @@ class MyWidget(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.setMinimumSize(400, 400)
+        self.initMenu()
         self.w = W()
         self.setCentralWidget(self.w)
         self.t = QTimer(self.w)
@@ -52,8 +48,36 @@ class MyWidget(QMainWindow):
         self.t.start(1)
 
     def initMenu(self):
-        self.button = QPushButton('Clear', self)
-        self.button.clicked.connect(self.clear)
+        self.fileMenu = self.menuBar().addMenu("&File")
+        self.editMenu = self.menuBar().addMenu("&Edit")
+        self.helpMenu = self.menuBar().addMenu("&Help")
+
+        self.fileMenuAction = QAction("&New", self)
+        self.editMenuAction1 = QAction("&Black", self)
+        self.editMenuAction2 = QAction("&White", self)
+        self.helpMenuAction = QAction("&About", self)
+
+        actGroup = QActionGroup(self)
+        actGroup.addAction(self.editMenuAction1)
+        actGroup.addAction(self.editMenuAction2)
+
+        self.editMenuAction1.setCheckable(True)
+        self.editMenuAction2.setCheckable(True)
+        self.editMenuAction1.setChecked(True)
+
+        self.fileMenu.addAction(self.fileMenuAction)
+        self.editMenu.addAction(self.editMenuAction1)
+        self.editMenu.addAction(self.editMenuAction2)
+        self.helpMenu.addAction(self.helpMenuAction)
+
+        self.editMenuAction1.triggered.connect(self.action1)
+        self.editMenuAction2.triggered.connect(self.action2)
+
+    def action1(self):
+        self.w.penColor = 1
+
+    def action2(self):
+        self.w.penColor = 2
 
 app = QApplication([])
 mainWin = MyWidget()
